@@ -1,0 +1,5 @@
+
+
+node deploy-commands.js - загружает команды в дс.
+
+node index.js - запуск бота    
