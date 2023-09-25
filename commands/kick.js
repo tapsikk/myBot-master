@@ -11,7 +11,7 @@ module.exports = {
     const member = interaction.options.getMember("цель");
     member.kick({ reason: "reason" });
     interaction.reply({
-      content: `Вы кикнули бездаря по имени: ${member.user.username}`,
+      content: `Вы кикнули бездаря по имени:  ${member.user.username}`,
       ephemeral: true,
     });
     // return interaction.reply({ content: `По причине: ${reason}` });
