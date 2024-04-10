@@ -1,61 +1,100 @@
-const fs = require('node:fs');
-const path = require('node:path');
+const {
+  Client,
+  GatewayIntentBits,
+  Collection,
+  Partials,
+  Events,
+  EmbedBuilder,
+} = require("discord.js");
+const { intents, partials } = require("./config");
+const { exampleEmbed } = require("./Commands/weapon.js");
+const path = require("node:path");
+const updateBannerEvent = require('./events/banner_update');
 
-// Требовать необходимые классы discord.js
-const { Client, Collection,  Events, GatewayIntentBits, Message} = require('discord.js');
-require('dotenv').config();
-const token = process.env.DISCORD_TOKEN;
+const fs = require("node:fs");
+require("dotenv").config();
 
-// Создаем новый экземпляр клиента
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const token = process.env.TOKEN;
+const client = new Client({ intents, partials });
 
-// Войдите в Discord с токеном вашего клиента
 client.commands = new Collection();
+const commandsPath = path.join(__dirname, "commands");
+const eventsPath = path.join(__dirname, "events");
+const commandFiles = fs
+  .readdirSync(commandsPath)
+  .filter((file) => file.endsWith(".js"));
+const eventFiles = fs
+  .readdirSync(eventsPath)
+  .filter((file) => file.endsWith(".js"));
 
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+for (const file of eventFiles) {
+  const filePath = path.join(eventsPath, file);
+  const event = require(filePath);
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(client, ...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(client, ...args));
+  }
+}
 
 for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	// Установите новый элемент в коллекции с ключом в качестве имени команды и значением в качестве экспортируемого модуля.
-	if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-	}
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath);
+  client.commands.set(command.data.name, command);
 }
 
 // вывод ошибки в консоль
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
+  const command = client.commands.get(interaction.commandName);
 
-	if (!command) return;
+  if (!command) return;
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: "There was an error while executing this command!",
+      ephemeral: true,
+    });
+  }
 });
 
-// Когда клиент будет готов, запустите этот код (только один раз)
-// Мы используем 'c' для параметра события, чтобы отделить его от уже определенного 'клиента'
-client.once(Events.ClientReady, c => {
-	console.log(`Запуск! 1... 2... 3...  ${c.user.tag} на связи.`);
-});
 
-client.on("messageCreate", async (message) => {
-	if (message.mentions.has(client.user)){
-
-		message.reply("слушаю:)")
-	}
-})
+updateBannerEvent.execute(client);
+  setInterval(() => updateBannerEvent.execute(client), updateBannerEvent.interval);
 
 
-
-// всегда внизу !!!!
 client.login(token);
+
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isStringSelectMenu()) return;
+  if (interaction.customId === "weapon") {
+    const {
+      demonKingLongswordEmbed,
+      demonicPlumFlowerSwordEmbed,
+      ShadowScythe,
+    } = require("./weapon_info.js");
+
+    switch (interaction.values[0]) {
+      case "info 1":
+        await interaction.reply({ embeds: [demonKingLongswordEmbed] });
+        break;
+
+      case "info 2":
+        await interaction.reply({ embeds: [demonicPlumFlowerSwordEmbed] });
+        break;
+
+      case "info 3":
+        await interaction.reply({ embeds: [ShadowScythe] });
+        break;
+
+
+      default:
+        await interaction.reply("Неверный выбор");
+    }
+  }
+});
+

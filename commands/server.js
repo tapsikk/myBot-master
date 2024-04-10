@@ -9,7 +9,7 @@ module.exports = {
   async execute(interaction) {
     // interaction.guild это объект, представляющий гильдию, в которой была запущена команда
     await interaction.reply(
-      `This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`
+      `Это сервер ${interaction.guild.name} и тут ${interaction.guild.memberCount} учасников.`
     );
   },
 };
