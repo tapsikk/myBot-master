@@ -2,6 +2,7 @@ const { Client,  Collection,  Events } = require("discord.js");
 const { intents, partials } = require("./utils/config");
 const path = require("node:path");
 const updateBannerEvent = require('./events/banner_update');
+const { handleWeaponCommand } = require('./utils/weaponCommandHandler');
 const fs = require("node:fs");
 require("dotenv").config();
 
@@ -53,42 +54,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-  // Запускаем функцию для обновления баннера каждые 5 минут
+  // запуск обновления баннера
   updateBannerEvent.execute(client);
   setInterval(() => updateBannerEvent.execute(client), updateBannerEvent.interval);
 
-
-
-client.login(token);
-
-  client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isStringSelectMenu()) return;
-  if (interaction.customId === "weapon") {
-    const {
-      demonKingLongswordEmbed,
-      demonicPlumFlowerSwordEmbed,
-      ShadowScythe,
-    } = require("./utils/weapon_info.js");
-
-    switch (interaction.values[0]) {
-      case "info 1":
-        await interaction.reply({ embeds: [demonKingLongswordEmbed] });
-        break;
-
-      case "info 2":
-        await interaction.reply({ embeds: [demonicPlumFlowerSwordEmbed] });
-        break;
-
-      case "info 3":
-        await interaction.reply({ embeds: [ShadowScythe] });
-        break;
-
-
-      default:
-        await interaction.reply("Неверный выбор");
-    }
-  }
+ // запуск обработки селект меню
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isStringSelectMenu() || interaction.customId !== "weapon") return;
+  await handleWeaponCommand(interaction);
 });
 
 
-
+client.login(token);
