@@ -1,8 +1,8 @@
-const { Client,  Collection,  Events } = require("discord.js");
+const { handleWeaponCommand } = require('./utils/weaponCommandHandler');
+const { Client, Collection, Events } = require("discord.js");
+const updateBannerEvent = require('./events/banner_update');
 const { intents, partials } = require("./utils/config");
 const path = require("node:path");
-const updateBannerEvent = require('./events/banner_update');
-const { handleWeaponCommand } = require('./utils/weaponCommandHandler');
 const fs = require("node:fs");
 require("dotenv").config();
 
@@ -53,12 +53,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
     });
   }
 });
-
-  // запуск обновления баннера
-  updateBannerEvent.execute(client);
-  setInterval(() => updateBannerEvent.execute(client), updateBannerEvent.interval);
-
- // запуск обработки селект меню
+// запуск обновления баннера
+updateBannerEvent.execute(client);
+setInterval(() => updateBannerEvent.execute(client), updateBannerEvent.interval);
+// запуск обработки селект меню
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isStringSelectMenu() || interaction.customId !== "weapon") return;
   await handleWeaponCommand(interaction);

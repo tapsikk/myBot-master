@@ -2,12 +2,9 @@ const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    // имя команды
     .setName("taps")
-    // описание команды
-    .setDescription("Replies with smile"),
+    .setDescription("Попробуй!"),
   async execute(interaction) {
-    // действие команды
     await interaction.reply("^-^");
   },
 };

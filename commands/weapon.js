@@ -9,7 +9,7 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("weapon")
-    .setDescription("Menu konceptia"),
+    .setDescription("Меню выбора оружия"),
   async execute(interaction) {
     try {
       const select = new StringSelectMenuBuilder()
@@ -18,19 +18,16 @@ module.exports = {
         .addOptions(
           new StringSelectMenuOptionBuilder()
             .setLabel("Demon's King Longsword")
-            // .setDescription('The dual-type Grass/Poison Seed Pokémon.')
             .setEmoji('1225192234262200472')
             .setValue("info 1"),
 
           new StringSelectMenuOptionBuilder()
             .setLabel("Demonic Plum Flower Sword")
-            // .setDescription('The Fire-type Lizard Pokémon.')
             .setEmoji('1225151348191002816')
             .setValue("info 2"),
 
           new StringSelectMenuOptionBuilder()
             .setLabel("Shadow Scythe")
-            // .setDescription('The Water-type Tiny Turtle Pokémon.')
             .setEmoji('1225192387014561853')
             .setValue("info 3"),
         );

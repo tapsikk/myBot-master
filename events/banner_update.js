@@ -1,6 +1,3 @@
-const Discord = require('discord.js');
-
-
 const TextOnGif = require('text-on-gif');
 const fs = require('fs');
 
@@ -8,21 +5,17 @@ module.exports = {
   name: 'updateBanner',
   once: false,
   interval: 5 * 60 * 1000, // 5 минут
-
   async execute(client) {
     try {
       const serverID = '815648090219872266';
       var guild = client.guilds.cache.get(serverID);
-      //const guild = client.guilds.cache.second(); // Получаем первый сервер из списка
       if (!guild) {
         console.error('Не удалось получить сервер.');
         return;
       }
-
       // Ожидаем, пока участники сервера будут загружены
       const members = await guild.members.fetch();
       const voiceMembers = members.filter(member => member.voice.channel); // Фильтруем участников в голосовых каналах
-
       const memberVoiceCount = voiceMembers.size;
       const memberCount = members.size;
 
@@ -33,7 +26,7 @@ module.exports = {
       gif.font_style = 'cursive';
       gif.font_color = '#0DA4FF';
       gif.font_size = '36px';
-      gif.alignment_y = 'top'; // Выравнивание текста по верхнему краю
+      gif.alignment_y = 'top';
 
       // Добавляем первую строку
       gif.position_y = 170; // Позиция для первой строки
