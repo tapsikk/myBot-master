@@ -5,7 +5,7 @@ module.exports = {
   name: 'updateBanner',
   once: false,
   interval: 5 * 60 * 1000, // 5 минут
-  async execute(client) {
+  async execute(client) {   
     try {
       const serverID = '815648090219872266';
       var guild = client.guilds.cache.get(serverID);
