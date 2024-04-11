@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const { intents, partials } = require("./config");
-const client = new Discord.Client();
+
+
 const TextOnGif = require('text-on-gif');
 const fs = require('fs');
 

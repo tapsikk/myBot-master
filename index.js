@@ -6,7 +6,7 @@ const {
   Events,
   EmbedBuilder,
 } = require("discord.js");
-const { intents, partials } = require("./config");
+const { intents, partials } = require("./utils/config");
 const { exampleEmbed } = require("./Commands/weapon.js");
 const path = require("node:path");
 const updateBannerEvent = require('./events/banner_update');
@@ -76,7 +76,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       demonKingLongswordEmbed,
       demonicPlumFlowerSwordEmbed,
       ShadowScythe,
-    } = require("./weapon_info.js");
+    } = require("./utils/weapon_info.js");
 
     switch (interaction.values[0]) {
       case "info 1":
