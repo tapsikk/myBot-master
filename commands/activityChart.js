@@ -3,12 +3,17 @@ const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discor
 const { createCanvas, loadImage } = require('canvas');
 const fs = require('fs');
 
-module.exports = {
+module.exports = { 
     data: new SlashCommandBuilder()
         .setName('activitychart')
         .setDescription('Построить график активности участников в голосовых каналах'),
     async execute(interaction) {
         try {
+
+            if (interaction.user.id !== '399237051695890434') {
+                await interaction.reply('У вас нет доступа к этой команде.');
+                return;
+            }
             const activityFile = './activity.json';
             let activities = [];
 

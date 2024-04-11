@@ -1,11 +1,13 @@
+// yourMainFile.js
+const compressGif = require('../utils/gifCompressor'); // Путь до файла gifCompressor.js
 const TextOnGif = require('text-on-gif');
 const fs = require('fs');
 
 module.exports = {
   name: 'updateBanner',
   once: false,
-  interval: 5 * 60 * 1000, // 5 минут
-  async execute(client) {   
+  interval: 2 * 60 * 1000, // 2 минут
+  async execute(client) {
     try {
       const serverID = '815648090219872266';
       var guild = client.guilds.cache.get(serverID);
@@ -37,7 +39,7 @@ module.exports = {
       });
 
       // Изменяем позицию для второй строки
-      gif.position_y = 312; // Новая позиция для второй строки (ниже первой)
+      gif.position_y = 311; // Новая позиция для второй строки (ниже первой)
 
       // Добавляем вторую строку с retain: true
       await gif.textOnGif({
@@ -58,9 +60,22 @@ module.exports = {
         });
       });
 
-      // Загружаем обновленный баннер на сервер
-      await guild.setBanner('media/taps2.gif', 'Обновлен баннер сервера');
-      console.log(`Обновлен баннер. Участников в голосовых каналах: ${memberVoiceCount}, общее количество участников: ${memberCount}`);
+      // Сжимаем гиф-файл перед установкой его как баннера
+      compressGif('media/taps2.gif', 'media/compressed_taps2.gif', (error, outputPath) => {
+        if (error) {
+          console.error('Ошибка при сжатии гиф-файла:', error);
+          return;
+        }
+
+        // Загружаем обновленный баннер на сервер
+        guild.setBanner(outputPath, 'Обновлен баннер сервера')
+          .then(() => {
+            console.log(`Обновлен баннер. Участников в голосовых каналах: ${memberVoiceCount}, общее количество участников: ${memberCount}`);
+          })
+          .catch((err) => {
+            console.error('Ошибка при установке баннера:', err);
+          });
+      });
     } catch (error) {
       console.error('Ошибка при обновлении баннера:', error);
     }
