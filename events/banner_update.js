@@ -11,7 +11,9 @@ module.exports = {
 
   async execute(client) {
     try {
-      const guild = client.guilds.cache.first(); // Получаем первый сервер из списка
+      const serverID = '815648090219872266';
+      var guild = client.guilds.cache.get(serverID);
+      //const guild = client.guilds.cache.second(); // Получаем первый сервер из списка
       if (!guild) {
         console.error('Не удалось получить сервер.');
         return;
@@ -25,7 +27,7 @@ module.exports = {
       const memberCount = members.size;
 
       const gif = new TextOnGif({
-        file_path: 'taps.gif'
+        file_path: 'media/background.gif'
       });
 
       gif.font_style = 'cursive';
@@ -49,12 +51,12 @@ module.exports = {
         text: memberCount.toString(),
         retain: true, // Сохраняем вторую строку поверх первой
         get_as_buffer: false,
-        write_path: 'taps2.gif' // Путь для сохранения результирующего GIF-файла
+        write_path: 'media/taps2.gif' // Путь для сохранения результирующего GIF-файла
       });
 
       // Ожидаем, пока файл завершит создание
       await new Promise((resolve, reject) => {
-        fs.access('taps2.gif', fs.constants.F_OK, (err) => {
+        fs.access('media/taps2.gif', fs.constants.F_OK, (err) => {
           if (err) {
             reject(err);
           } else {
@@ -64,7 +66,7 @@ module.exports = {
       });
 
       // Загружаем обновленный баннер на сервер
-      await guild.setBanner('./taps2.gif', 'Обновлен баннер сервера');
+      await guild.setBanner('media/taps2.gif', 'Обновлен баннер сервера');
       console.log(`Обновлен баннер. Участников в голосовых каналах: ${memberVoiceCount}, общее количество участников: ${memberCount}`);
     } catch (error) {
       console.error('Ошибка при обновлении баннера:', error);

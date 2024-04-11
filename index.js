@@ -1,16 +1,7 @@
-const {
-  Client,
-  GatewayIntentBits,
-  Collection,
-  Partials,
-  Events,
-  EmbedBuilder,
-} = require("discord.js");
+const { Client,  Collection,  Events } = require("discord.js");
 const { intents, partials } = require("./utils/config");
-const { exampleEmbed } = require("./Commands/weapon.js");
 const path = require("node:path");
 const updateBannerEvent = require('./events/banner_update');
-
 const fs = require("node:fs");
 require("dotenv").config();
 
@@ -62,14 +53,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
-
-updateBannerEvent.execute(client);
+  // Запускаем функцию для обновления баннера каждые 5 минут
+  updateBannerEvent.execute(client);
   setInterval(() => updateBannerEvent.execute(client), updateBannerEvent.interval);
+
 
 
 client.login(token);
 
-client.on(Events.InteractionCreate, async (interaction) => {
+  client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isStringSelectMenu()) return;
   if (interaction.customId === "weapon") {
     const {
@@ -97,4 +89,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
   }
 });
+
+
 
