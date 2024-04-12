@@ -6,6 +6,10 @@ const { EmbedBuilder } = require('discord.js');
 
     execute(client, oldMessage, newMessage) {
 
+        if (oldMessage.author.bot) {
+            return;
+          }
+
       const channel = client.channels.cache.get('1228066823090737162');
 
 

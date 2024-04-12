@@ -12,13 +12,6 @@
     "canvas": "^2.11.2",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
-    "get-stream": "^9.0.1",
-    "giflossy": "^3.0.41",
-    "imagemin": "^8.0.1",
-    "imagemin-gifsicle": "^7.0.0",
-    "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^9.0.2",
-    "imagemin-svgo": "^10.0.1",
     "sharp": "^0.33.3",
     "text-on-gif": "^2.0.13"
   },
