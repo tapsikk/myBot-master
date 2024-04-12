@@ -10,10 +10,12 @@ module.exports = {
     async execute(interaction) {
         try {
 
-            if (interaction.user.id !== '399237051695890434') {
+           /* if (interaction.user.id !== '399237051695890434') {
                 await interaction.reply('У вас нет доступа к этой команде.');
                 return;
             }
+
+            */
             const activityFile = './activity.json';
             let activities = [];
 

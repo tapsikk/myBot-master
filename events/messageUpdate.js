@@ -4,9 +4,9 @@ const { EmbedBuilder } = require('discord.js');
   module.exports = {
     name: 'messageUpdate',
 
-    execute(client, oldMessage, newMessage) {
+    execute(client, message, oldMessage, newMessage) {
 
-        if (oldMessage.author.bot) {
+        if (message.author.bot) {
             return;
           }
 
