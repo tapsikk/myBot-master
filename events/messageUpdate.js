@@ -1,51 +1,31 @@
 const { EmbedBuilder } = require('discord.js');
 
+module.exports = {
+  name: 'messageUpdate',
+  execute(client, message, oldMessage, newMessage) {
+    const channel = client.channels.cache.get('1228066823090737162');
 
-  module.exports = {
-    name: 'messageUpdate',
+    let oldMessageContent = 'Текста нет';
+    let newMessageContent = 'Текста нет';
 
-    execute(client, message, oldMessage, newMessage) {
-
-        if (message.author.bot) {
-            return;
-          }
-
-      const channel = client.channels.cache.get('1228066823090737162');
-
-   
-
-      if (oldMessage) {
-        var url = oldMessage.content.toString();
-      } else {
-        var url = "текста нет";
-      }
-      if (newMessage && newMessage.content) {
-        var url2 = newMessage.content.toString();
-      } else {
-        var url2 = "текста нет";
-      }
-
-
-
-      const embed = new EmbedBuilder()
-        .setColor('#00eaff')
-        .setTitle('Сообщение было изменено')
-        .addFields(
-          
-
-          { name: 'Автор сообщения: ', value: `${oldMessage.author}` },
-          { name: 'Текст сообщения до изменения: ', value: `${url}` },
-          { name: 'Текст сообщения после изменения: ', value: `${url2}` },
-          
-
-
-        )
-        .setFooter({ text: `UID: ${oldMessage.id}` });
-
-
-      channel.send({ embeds: [embed] });
-
+    if (oldMessage && oldMessage.content) {
+      oldMessageContent = oldMessage.content.toString();
     }
-  };
 
-        
+    if (newMessage && newMessage.content) {
+      newMessageContent = newMessage.content.toString();
+    }
+
+    const embed = new EmbedBuilder()
+      .setColor('#00eaff')
+      .setTitle('Сообщение было изменено')
+      .addFields(
+        { name: 'Автор сообщения:', value: oldMessage.author.toString() },
+        { name: 'Текст сообщения до изменения:', value: oldMessageContent },
+        { name: 'Текст сообщения после изменения:', value: newMessageContent }
+      )
+      .setFooter({ text: `UID: ${oldMessage.id}` });
+
+    channel.send({ embeds: [embed] });
+  },
+};
