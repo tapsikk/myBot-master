@@ -6,7 +6,7 @@ const { EmbedBuilder} = require('discord.js');
            
             execute(client, message)  {
                 
-                if (message.author.bot) {
+               if (message.author.bot) {
                     return;
                   }
 
@@ -16,9 +16,9 @@ const { EmbedBuilder} = require('discord.js');
                
           
                     if (message.content) {
-                        var url = message.content;
+                        url = message.content.toString();
                       } else {
-                        var url = "текста нет";
+                        url = "текста нет";
                       }
                       
              

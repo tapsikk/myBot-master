@@ -12,15 +12,15 @@ const { EmbedBuilder } = require('discord.js');
 
       const channel = client.channels.cache.get('1228066823090737162');
 
-
+   
 
       if (oldMessage) {
-        var url = oldMessage.content;
+        var url = oldMessage.content.toString();
       } else {
         var url = "текста нет";
       }
-      if (newMessage.content) {
-        var url2 = newMessage.content;
+      if (newMessage && newMessage.content) {
+        var url2 = newMessage.content.toString();
       } else {
         var url2 = "текста нет";
       }
