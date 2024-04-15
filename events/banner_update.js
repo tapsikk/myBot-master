@@ -6,7 +6,7 @@ const fs = require('fs');
 module.exports = {
   name: 'updateBanner',
   once: false,
-  interval: 0.1 * 60 * 1000, // 2 минут
+  interval: 6 * 60 * 1000, // 2 минут
   async execute(client) {
     try {
       const serverID = '815648090219872266';
