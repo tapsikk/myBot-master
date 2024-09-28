@@ -4,7 +4,7 @@ const fs = require('fs');
 module.exports = {
     name: 'activityTracker',
     once: false,
-    interval: 30 * 60 * 1000, // 30 минут
+    interval: 30 * 60 * 1000, // 30 мин
     async execute(client) {
         try {
             const serverID = '815648090219872266';
