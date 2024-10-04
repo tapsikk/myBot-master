@@ -1,7 +1,7 @@
 const { handleWeaponCommand } = require('./utils/weaponCommandHandler');
 const { Client, Collection, Events } = require("discord.js");
 const updateBannerEvent = require('./events/banner_update');
-const activityTracker = require('./events/activityTracker');
+// const activityTracker = require('./events/activityTracker');
 const { intents, partials } = require("./utils/config");
 const path = require("node:path");
 const fs = require("node:fs");
@@ -56,8 +56,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 // запуск обновления активности
-activityTracker.execute(client);
-setInterval(() => activityTracker.execute(client), activityTracker.interval);
+// activityTracker.execute(client);
+// setInterval(() => activityTracker.execute(client), activityTracker.interval);
 // запуск обновления баннера
 updateBannerEvent.execute(client);
 setInterval(() => updateBannerEvent.execute(client), updateBannerEvent.interval);
