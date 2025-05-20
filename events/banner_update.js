@@ -2,6 +2,7 @@
 const compressGif = require('../utils/gifCompressor'); // Путь до файла gifCompressor.js
 const TextOnGif = require('text-on-gif');
 const fs = require('fs');
+const { error } = require('console');
 
 module.exports = {
   name: 'updateBanner',
@@ -12,7 +13,7 @@ module.exports = {
       const serverID = '815648090219872266';
       var guild = client.guilds.cache.get(serverID);
       if (!guild) {
-        console.error('Не удалось получить сервер.');
+        console.error(error);
         return;
       }
       // Ожидаем, пока участники сервера будут загружены

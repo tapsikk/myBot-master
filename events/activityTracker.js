@@ -10,7 +10,7 @@ module.exports = {
             const serverID = '815648090219872266';
             const guild = client.guilds.cache.get(serverID);
             if (!guild) {
-                console.error('Не удалось получить сервер.');
+                console.error('какая-то проблемка');
                 return;
             }
 
